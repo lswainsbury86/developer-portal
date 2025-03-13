@@ -4,16 +4,23 @@ description: 'Configuration of Sitemap in XM Cloud'
 hasSubPageNav: true
 hasInPageNav: true
 area: ['accelerate']
-lastUpdated: '2024-10-07'
+lastUpdated: '2025-03-13'
+created: '2024-10-07'
+audience: ['Architect','Technical Implementer']
 ---
 
-## Problem
+## Context
 
 A marketer, strategist or content author would like to use industry standard SEO tools to ensure that all required content is discoverable and included in search engine indexes. To do this a sitemap is required. This recipe will walk the developer through the steps to configure a Sitemap in XMC.
 
-## Solution
+## Execution
 
 This solution assumes the developer has already configured an XM Cloud site and the Next.JS web application. XMC uses SXA sitemap functionality by default. However it’s possible to implement additional Sitemap’s directly in the head application to target other sets of content, such as PDF’s or Images.
+
+<Alert status="info">
+  <AlertIcon />
+  Avoid building the XM Cloud sitemap with custom implementations on the Content Management role, it can lead to maintenance challenges, compatibility issues, and unnecessary complexity—leveraging the built-in sitemap generation ensures reliability, scalability, and alignment with best practices.
+</Alert>
 
 ### Prerequisites
 
@@ -31,9 +38,11 @@ To configure the Host name for your Sitemap you’ll need to make the following 
 
 ### Configuring
 
-XMC generates the Sitemap media item when an item is published on the Site, but only after a period of time has passed since the last sitemap generation job occurred. This media item contains the Sitemap.xml file that is served in Experience Edge.
+XMC sitemaps can be managed using the configuration options available in [Sites](https://doc.sitecore.com/xmc/en/users/xm-cloud/configure-a-sitemap-in-sites.html). Configure the sitemap to guide search engines through your site's structure. The sitemap is regenerated after the publishing process ends, depending on the refresh threshold configuration. To ensure that the sitemap link is generated properly for your hosted/live sites, you must configure the target hostname on the site host item. Find the sitemap of hosted/live sites by typing /sitemap.xml after the hostname
 
-XMC sitemaps are configured using the following item: `/sitecore/content/<site collection>/<site>/Settings/Sitemap`. The following fields are the only relevant settings that should be configured or updated in XMC:
+XMC generates the Sitemap media item when an item is published on the Site, but only after a period of time (Refresh threshold) has passed since the last sitemap generation job occurred. This media item contains the Sitemap.xml file that is served in Experience Edge.
+
+In addition to Sites they can also be configured using the following item in the Content Editor: `/sitecore/content/<site collection>/<site>/Settings/Sitemap`. The following fields are the only relevant settings that should be configured or updated in XMC:
 
 1. `Refresh threshold` - Duration is defined in minutes, this field controls how often the sitemap can be generated on publish.
 2. `Cache expiration` - Should be configured to match the value set in `Refresh threshold`
@@ -50,7 +59,7 @@ To configure an item so that it’s excluded from the Sitemap you can follow the
 4. Save and then Publish this item.
 5. Depending on the configuration of the caching configuration of your sitemap, wait until the cache has expired and check again. You can also go to the Sitemap configuration item here: `<site collection>/<site>/Settings/Sitemap` and update the field "Refresh threshold" to test these changes by setting the value to 0. Just make sure to update this value back to the previous value once you complete testing.
 
-## Discussion
+## Insights
 
 ### The Experience Edge sitemap GraphQL query
 
@@ -82,4 +91,10 @@ If you have clicked the check box on `<site collection>/<site>/Settings/Sitemap`
 
 <Row columns={2}>
   <Link title="Publishing to Edge" link="/learn/accelerate/xm-cloud/pre-development/information-architecture/publishing-to-edge" />
+</Row>
+
+### Related Documentation
+
+<Row columns={2}>
+  <Link title="Configure a sitemap in Sites | Sitecore Documentation" link="https://doc.sitecore.com/xmc/en/users/xm-cloud/configure-a-sitemap-in-sites.html" />
 </Row>
